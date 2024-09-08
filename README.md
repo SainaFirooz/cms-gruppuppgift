@@ -1,5 +1,9 @@
 This is a boilerplate for WEBB23 CMS Course. Next.js project with Storyblok CMS integration.
 
+## Gruppuppgift
+
+## Saina, Miguel och Brian
+
 ## Getting Started
 
 First, run the development server:
