@@ -1,13 +1,12 @@
 import Header from "../nestable/Header";
-//Uses config set global components for the layout
+import Footer from "../nestable/Footer";
+
 export default function Layout({ config, children }) {
-  //Create at least a header and footer component
-  //Use console.log to determine blok object structure if unsure...
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header blok={config} />
-      <main>{children}</main>
-      <footer></footer>
-    </>
+      <main className="flex-grow">{children}</main>
+      <Footer blok={config} />
+    </div>
   );
 }
