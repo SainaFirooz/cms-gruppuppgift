@@ -7,12 +7,14 @@ import Page from "@/components/content-types/Page";
 import Teaser from "@/components/nestable/Teaser";
 import RichTextDefault from "@/components/nestable/RichText";
 import header from "@/components/nestable/Header";
+import footer from "@/components/nestable/Footer";
 
 const components = {
   page: Page,
   teaser: Teaser,
   richtext: RichTextDefault,
   header: header,
+  footer: footer,
 };
 
 storyblokInit({
