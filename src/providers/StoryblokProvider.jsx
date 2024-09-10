@@ -12,6 +12,7 @@ import Hero from "@/components/nestable/Hero";
 import Banner from "@/components/nestable/Banner";
 import Grid from "@/components/nestable/Grid";
 import ProductList from "@/components/nestable/ProductList";
+import ProductPage from "@/components/content-types/ProductPage";
 
 const components = {
   page: Page,
@@ -23,6 +24,7 @@ const components = {
   banner: Banner,
   grid: Grid,
   product_list: ProductList,
+  product: ProductPage,
 };
 
 storyblokInit({
