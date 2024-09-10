@@ -17,8 +17,9 @@ const Header = ({ blok }) => {
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow-md">
       <div className="flex items-center space-x-8">
+        {/* Logo with Link */}
         <div className="font-poppins text-2xl font-bold">
-          {logo || "Default Logo"}
+          <Link href="/">{logo || "Default Logo"}</Link>
         </div>
 
         <nav className="menu_links">
@@ -87,9 +88,9 @@ const Header = ({ blok }) => {
           <path
             d="M16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11M5 9H19L20 21H4L5 9Z"
             stroke="#374151"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
           />
         </svg>
       </div>
