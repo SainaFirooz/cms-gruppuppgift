@@ -6,7 +6,7 @@ const Hero = ({ blok }) => {
         {blok.text}
       </p>
       {blok.button_text && (
-        <button className="px-6 py-3 bg-black text-white text-sm font-medium rounded-md hover:bg-gray-800 transition duration-300">
+        <button className="px-6 py-3 border border-gray-600 text-black hover:bg-gray-300 transition duration-300 ease-in-out">
           {blok.button_text}
         </button>
       )}
