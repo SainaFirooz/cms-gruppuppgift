@@ -1,6 +1,6 @@
 const Grid = ({ blok }) => {
 
-    console.log(blok);
+    // console.log(blok);
     
 
     return(

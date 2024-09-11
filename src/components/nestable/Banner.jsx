@@ -3,10 +3,12 @@
 const Banner = ({ blok }) => {
 
     // console.log(blok);
-    //lalfslf
+    //className="banner-container p-6 flex justify-center h-64" 
 
     return(
-        <img src={blok.background_image.filename} alt="" />
+        <div >
+            <img src={blok.background_image.filename} alt=""  className="h-64 w-full object-cover" />
+        </div>
 
     )
 }
