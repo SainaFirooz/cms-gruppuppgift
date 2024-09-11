@@ -4,7 +4,7 @@ const Image = ({ blok }) => {
 
     return(
         <div className="p-10 flex justify-center  ">
-            <img src={blok?.image.filename} alt="" />
+            <img src={blok?.image.filename} alt=""  className="rounded-lg" />
         </div>
     )
 }
