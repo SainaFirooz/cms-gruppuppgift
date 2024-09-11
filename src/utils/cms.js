@@ -92,4 +92,22 @@ export class StoryblokCMS {
       return [];
     }
   }
+  static async searchProducts(searchTerm) {
+    try {
+      const { data } = await this.sbGet("cdn/stories", {
+        search_term: searchTerm,
+        filter_query: {
+          component: {
+            in: "product",
+          },
+        },
+        version: this.VERSION,
+        cv: Date.now(),
+      });
+      return data.stories;
+    } catch (error) {
+      console.error("Error searching for products:", error);
+      return [];
+    }
+  }
 }
