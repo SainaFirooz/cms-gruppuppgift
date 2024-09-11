@@ -14,7 +14,8 @@ const Grid = ({ blok }) => {
             <img
               src={gridItem.image.filename}
               alt={`Grid item ${index}`}
-              className="w-full h-auto object-cover"
+              className="w-full h-auto object-cover rounded-lg"
+
             />
           </div>
         );
