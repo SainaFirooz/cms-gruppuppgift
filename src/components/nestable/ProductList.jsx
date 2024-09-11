@@ -10,7 +10,14 @@ const ProductList = ({ blok }) => {
     const fetchProducts = async () => {
       try {
         const prod = await StoryblokCMS.getProducts();
-        setProducts(prod);
+
+        const filteredProducts = prod.filter(
+          (product) =>
+            product.content.product_name &&
+            product.content.product_price &&
+            product.content.product_sizes?.length > 0
+        );
+        setProducts(filteredProducts);
       } catch (e) {
         console.log("Error fetching products:", e);
       } finally {
@@ -35,24 +42,34 @@ const ProductList = ({ blok }) => {
           products.map((product) => (
             <li
               key={product.uuid}
-              className="border rounded-lg p-4 flex flex-col items-center"
+              className="border rounded-lg p-4 flex flex-col items-center transition-transform transform hover:scale-105 duration-300"
             >
               {product.content.product_image && (
-                <div className="w-full aspect-square mb-4 relative overflow-hidden rounded-lg">
+                <div className="w-full aspect-square mb-4 relative overflow-hidden rounded-lg shadow-md">
                   <Image
                     src={product.content.product_image.filename}
                     alt={product.content.product_name}
                     layout="fill"
                     objectFit="cover"
+                    className="hover:opacity-90"
                   />
                 </div>
               )}
-              <h3 className="font-medium text-center mb-2">
-                {product.content.product_name || "Unnamed Product"}
+              <h3 className="font-medium text-center mb-2 text-lg">
+                {product.content.product_name}
               </h3>
-              <span className="text-sm text-gray-500 mb-2">M</span>
-              <p className="text-lg font-bold text-center mb-2">
-                ${product.content.product_price || "N/A"}
+              <div className="flex flex-wrap justify-center gap-2 mb-2">
+                {product.content.product_sizes.map((size, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 border rounded-lg text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200"
+                  >
+                    {size}
+                  </span>
+                ))}
+              </div>
+              <p className="text-lg font-bold text-center text-black mb-2">
+                ${product.content.product_price}
               </p>
             </li>
           ))

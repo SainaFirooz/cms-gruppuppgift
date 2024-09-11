@@ -1,89 +1,135 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 
 const Header = ({ blok }) => {
+  const [hoveredMenu, setHoveredMenu] = useState(null);
+  const [hoveredSubMenu, setHoveredSubMenu] = useState(null);
+
   const { content } = blok || {};
   const blocks = content?.Blocks || [];
-
   const headerBlock =
     blocks.find((block) => block.component === "header") || {};
-
-  const { logo, menu_links, search_placeholder } = headerBlock;
+  const { logo, menu_links } = headerBlock;
 
   if (!menu_links) {
     return <div>No menu links available</div>;
   }
 
+  const getAbsoluteUrl = (url) => {
+    if (url && !url.startsWith("/")) {
+      return `${url}`;
+    }
+    return url || "/";
+  };
+
+  // Function to render second-level submenus
+  const renderSecondLevelSubmenu = (submenuItems) => {
+    return (
+      <ul className="absolute left-full top-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20">
+        {submenuItems.map((submenuItem) => (
+          <li key={submenuItem._uid}>
+            <Link href={getAbsoluteUrl(submenuItem.submenu_link?.cached_url)}>
+              <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition duration-200 ease-in-out">
+                {submenuItem.submenu_name ||
+                  submenuItem.link_name ||
+                  "Unnamed Submenu Item"}
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  // Function to render first-level submenus
+  const renderFirstLevelSubmenu = (submenuItems) => {
+    return (
+      <ul className="absolute left-0 top-0 mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+        {submenuItems.map((submenuItem) => (
+          <li
+            key={submenuItem._uid}
+            className="relative group"
+            onMouseEnter={() => setHoveredSubMenu(submenuItem._uid)}
+            onMouseLeave={() => setHoveredSubMenu(null)}
+          >
+            {/* First-Level Submenu Item */}
+            <Link href={getAbsoluteUrl(submenuItem.submenu_link?.cached_url)}>
+              <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition duration-200 ease-in-out">
+                {submenuItem.submenu_name ||
+                  submenuItem.link_name ||
+                  "Unnamed Submenu Item"}
+              </div>
+            </Link>
+
+            {/* Render Second-Level Submenu only when hovered */}
+            {Array.isArray(submenuItem.submenu_items) &&
+              submenuItem.submenu_items.length > 0 &&
+              hoveredSubMenu === submenuItem._uid && (
+                <div className="relative">
+                  <ul className="absolute  top-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20">
+                    {renderSecondLevelSubmenu(submenuItem.submenu_items)}
+                  </ul>
+                </div>
+              )}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow-md">
       <div className="flex items-center space-x-8">
-        {/* Logo with Link */}
+        {/* Logo */}
         <div className="font-poppins text-2xl font-bold">
           <Link href="/">{logo || "Default Logo"}</Link>
         </div>
 
+        {/* Navigation Menu */}
         <nav className="menu_links">
           <ul className="flex space-x-4">
             {menu_links.map((menuItem) => (
-              <li key={menuItem._uid} className="relative group">
-                <Link
-                  href={menuItem.link_url?.url || "#"}
-                  className="hover:text-gray-700"
-                >
-                  {menuItem.link_name || "Unnamed Link"}
+              <li
+                key={menuItem._uid}
+                className="relative inline-block text-left group"
+                onMouseEnter={() => setHoveredMenu(menuItem._uid)}
+                onMouseLeave={() => setHoveredMenu(null)}
+              >
+                {/* Top-level menu item (e.g., Products, About) */}
+                <Link href={getAbsoluteUrl(menuItem.link_url?.cached_url)}>
+                  <div className="border-b-2 border-transparent group-hover:border-black transition duration-300 ease-in-out">
+                    <h2 className="text-[1.1rem] tracking-[-0.6px]">
+                      {menuItem.link_name || "Unnamed Link"}
+                    </h2>
+                  </div>
                 </Link>
 
+                {/* Render First-Level Submenu if it exists */}
                 {Array.isArray(menuItem.submenu_items) &&
-                  menuItem.submenu_items.length > 0 && (
-                    <ul className="absolute hidden group-hover:block bg-white shadow-lg mt-2 space-y-2 p-4">
-                      {menuItem.submenu_items.map((submenuItem) => (
-                        <li key={submenuItem._uid}>
-                          <Link
-                            href={submenuItem.link_url?.url || "#"}
-                            className="block px-2 py-1 hover:bg-gray-100"
-                          >
-                            {submenuItem.link_name || "Unnamed Submenu Item"}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                  menuItem.submenu_items.length > 0 &&
+                  hoveredMenu === menuItem._uid && (
+                    <div className="relative group">
+                      {renderFirstLevelSubmenu(menuItem.submenu_items)}
+                    </div>
                   )}
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="ml-4">
-          <form className="flex items-center">
-            <button type="submit" className="text-gray-500 hover:text-gray-700">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </button>
+        {/* Search Bar */}
+        <SearchBar />
 
-            <input
-              type="text"
-              placeholder={search_placeholder || "Search"}
-              className="ml-2 border rounded-lg px-3 py-1 focus:outline-none"
-            />
-          </form>
-        </div>
+        {/* Cart Icon */}
         <svg
           fill="none"
           height="24"
           viewBox="0 0 24 24"
           width="24"
           xmlns="http://www.w3.org/2000/svg"
+          aria-label="Shopping Cart"
         >
           <path
             d="M16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11M5 9H19L20 21H4L5 9Z"
