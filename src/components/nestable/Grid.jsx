@@ -7,7 +7,7 @@ const Grid = ({ blok }) => {
         <>
             {blok.columns.map(gridItem => {
                 return (
-                    <img src={gridItem.image.filename} />
+                    <img src={gridItem.image.filename} key={gridItem._uid}/>
                 )
             })}
         </>
