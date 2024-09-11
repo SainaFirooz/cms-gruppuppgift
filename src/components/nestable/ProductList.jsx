@@ -6,7 +6,6 @@ import { StoryblokCMS } from "@/utils/cms";
 
 const ProductList = ({ blok }) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,8 +31,6 @@ const ProductList = ({ blok }) => {
         setProducts(filteredProducts);
       } catch (e) {
         console.log("Error fetching products:", e);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -45,14 +42,13 @@ const ProductList = ({ blok }) => {
       <h2 className="text-2xl font-bold mb-6 text-center">
         {blok.title || "Our Products"}
       </h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.length > 0 ? (
-          products.map((product) => (
+      {products.length > 0 && (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
             <li
               key={product.uuid}
               className="border rounded-lg p-4 flex flex-col items-center transition-transform transform hover:scale-105 duration-300"
             >
-              {/* Use Link with legacyBehavior to keep the <a> tag */}
               <Link href={`/${product.full_slug}`} legacyBehavior passHref>
                 <a className="w-full">
                   {product.content.product_image && (
@@ -85,11 +81,9 @@ const ProductList = ({ blok }) => {
                 </a>
               </Link>
             </li>
-          ))
-        ) : (
-          <li>Loading...</li>
-        )}
-      </ul>
+          ))}
+        </ul>
+      )}
     </section>
   );
 };
