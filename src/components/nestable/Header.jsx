@@ -25,7 +25,6 @@ const Header = ({ blok }) => {
     return url || "/";
   };
 
-  // Function to handle navigation and prevent URL stacking
   const handleNavigation = (url) => {
     const absoluteUrl = getAbsoluteUrl(url);
     if (router.asPath !== absoluteUrl) {
@@ -35,7 +34,6 @@ const Header = ({ blok }) => {
     }
   };
 
-  // Function to render second-level submenus
   const renderSecondLevelSubmenu = (submenuItems) => {
     return (
       <ul className="absolute left-full top-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20">
@@ -57,7 +55,6 @@ const Header = ({ blok }) => {
     );
   };
 
-  // Function to render first-level submenus
   const renderFirstLevelSubmenu = (submenuItems) => {
     return (
       <ul className="absolute left-0 top-0 mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
@@ -94,7 +91,11 @@ const Header = ({ blok }) => {
 
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow-md">
-      <div className="flex items-center space-x-8">
+      {/* Left Section: Logo, Navigation Menu, Search Bar */}
+      <div
+        className="flex items-center space-x-8"
+        style={{ marginLeft: "10%" }}
+      >
         {/* Logo */}
         <div
           className="font-poppins text-2xl font-bold cursor-pointer"
@@ -138,6 +139,10 @@ const Header = ({ blok }) => {
 
         {/* Search Bar */}
         <SearchBar />
+      </div>
+
+      {/* Right Section: Cart Icon */}
+      <div className="flex items-center space-x-4">
         {/* Cart Icon */}
         <svg
           fill="none"
@@ -146,6 +151,7 @@ const Header = ({ blok }) => {
           width="24"
           xmlns="http://www.w3.org/2000/svg"
           aria-label="Shopping Cart"
+          className="cursor-pointer"
         >
           <path
             d="M16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11M5 9H19L20 21H4L5 9Z"
@@ -155,6 +161,9 @@ const Header = ({ blok }) => {
             strokeWidth="2"
           />
         </svg>
+
+        {/* Cart Item Count */}
+        <span className="text-gray-700 text-sm">3</span>
       </div>
     </header>
   );
