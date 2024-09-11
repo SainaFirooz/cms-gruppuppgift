@@ -10,7 +10,8 @@ const Header = ({ blok }) => {
 
   const { content } = blok || {};
   const blocks = content?.Blocks || [];
-  const headerBlock = blocks.find((block) => block.component === "header") || {};
+  const headerBlock =
+    blocks.find((block) => block.component === "header") || {};
   const { logo, menu_links } = headerBlock;
 
   if (!menu_links) {
@@ -28,9 +29,9 @@ const Header = ({ blok }) => {
   const handleNavigation = (url) => {
     const absoluteUrl = getAbsoluteUrl(url);
     if (router.asPath !== absoluteUrl) {
-      router.push(absoluteUrl); // Navigate only if it's a different URL
+      router.push(absoluteUrl);
     } else {
-      router.replace(absoluteUrl); // If it's the same URL, replace the current one to avoid stacking
+      router.replace(absoluteUrl);
     }
   };
 
@@ -42,9 +43,13 @@ const Header = ({ blok }) => {
           <li key={submenuItem._uid}>
             <div
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition duration-200 ease-in-out"
-              onClick={() => handleNavigation(submenuItem.submenu_link?.cached_url)}
+              onClick={() =>
+                handleNavigation(submenuItem.submenu_link?.cached_url)
+              }
             >
-              {submenuItem.submenu_name || submenuItem.link_name || "Unnamed Submenu Item"}
+              {submenuItem.submenu_name ||
+                submenuItem.link_name ||
+                "Unnamed Submenu Item"}
             </div>
           </li>
         ))}
@@ -65,9 +70,13 @@ const Header = ({ blok }) => {
           >
             <div
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition duration-200 ease-in-out"
-              onClick={() => handleNavigation(submenuItem.submenu_link?.cached_url)}
+              onClick={() =>
+                handleNavigation(submenuItem.submenu_link?.cached_url)
+              }
             >
-              {submenuItem.submenu_name || submenuItem.link_name || "Unnamed Submenu Item"}
+              {submenuItem.submenu_name ||
+                submenuItem.link_name ||
+                "Unnamed Submenu Item"}
             </div>
 
             {Array.isArray(submenuItem.submenu_items) &&
@@ -87,7 +96,10 @@ const Header = ({ blok }) => {
     <header className="flex justify-between items-center p-4 bg-white shadow-md">
       <div className="flex items-center space-x-8">
         {/* Logo */}
-        <div className="font-poppins text-2xl font-bold" onClick={() => handleNavigation("/")}>
+        <div
+          className="font-poppins text-2xl font-bold cursor-pointer"
+          onClick={() => handleNavigation("/")}
+        >
           {logo || "Default Logo"}
         </div>
 
@@ -97,13 +109,15 @@ const Header = ({ blok }) => {
             {menu_links.map((menuItem) => (
               <li
                 key={menuItem._uid}
-                className="relative inline-block text-left group"
+                className="relative inline-block text-left group cursor-pointer"
                 onMouseEnter={() => setHoveredMenu(menuItem._uid)}
                 onMouseLeave={() => setHoveredMenu(null)}
               >
                 <div
                   className="border-b-2 border-transparent group-hover:border-black transition duration-300 ease-in-out"
-                  onClick={() => handleNavigation(menuItem.link_url?.cached_url)}
+                  onClick={() =>
+                    handleNavigation(menuItem.link_url?.cached_url)
+                  }
                 >
                   <h2 className="text-[1.1rem] tracking-[-0.6px]">
                     {menuItem.link_name || "Unnamed Link"}
