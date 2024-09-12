@@ -14,42 +14,54 @@ export default function SearchBar({ search_placeholder = "Search" }) {
       try {
         console.log("Searching for:", query);
 
-        // Call the searchProducts function
         const results = await StoryblokCMS.searchProducts(query);
-        console.log("Storyblok API response:", results); // Log the API response for debugging
+        console.log("Storyblok API response:", results);
         setSearchResults(results || []);
       } catch (error) {
         console.error("Error fetching search results:", error);
         setSearchResults([]);
       }
     } else {
-      setSearchResults([]); // Clear results if search term is too short
+      setSearchResults([]);
     }
   };
 
   const handleInputChange = (e) => {
     const query = e.target.value;
     setSearchTerm(query);
-    handleSearch(query); // Trigger search as the user types
+    handleSearch(query);
   };
 
   const clearSearchOnClick = () => {
-    setSearchTerm(""); // Clear the search term after clicking a product
-    setSearchResults([]); // Clear search results after clicking
+    setSearchTerm("");
+    setSearchResults([]);
   };
 
   const renderProducts = () => {
-    return searchResults?.map((story) => (
-      <Link href={`/products/${story.slug}`} key={story.id}>
-        <div
-          className="p-2 hover:bg-gray-100 cursor-pointer"
-          onClick={clearSearchOnClick} // Clear the search when clicking a product
-        >
-          <p>{story.content.product_name}</p>{" "}
-          {/* Assuming 'product_name' exists */}
-        </div>
-      </Link>
-    ));
+    return searchResults?.map((story) => {
+      const { product_name, product_image, product_price } = story.content;
+
+      return (
+        <Link href={`/products/${story.slug}`} key={story.id}>
+          <div
+            className="p-2 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
+            onClick={clearSearchOnClick}
+          >
+            <div className="flex items-center">
+              {product_image && (
+                <img
+                  src={product_image.filename}
+                  alt={product_name}
+                  className="w-12 h-12 object-cover mr-4"
+                />
+              )}
+              <p className="font-bold">{product_name}</p>
+            </div>
+            <p className="text-gray-700 font-bold">${product_price}</p>
+          </div>
+        </Link>
+      );
+    });
   };
 
   return (
@@ -80,7 +92,7 @@ export default function SearchBar({ search_placeholder = "Search" }) {
           placeholder={search_placeholder}
           className="ml-2 border rounded-lg px-3 py-1 focus:outline-none"
           value={searchTerm}
-          onChange={handleInputChange} // Trigger search on input change
+          onChange={handleInputChange}
         />
       </form>
 

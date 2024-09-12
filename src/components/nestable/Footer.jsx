@@ -54,7 +54,7 @@ const Footer = ({ blok }) => {
                 <h3 className="text-base font-bold mb-4 text-gray-900">
                   {section.title || "Footer Navigation"}
                 </h3>
-                <ul className="space-y-2 cursor-pointer ">
+                <ul className="space-y-2 cursor-pointer">
                   {section.link_groups?.map((linkGroup) => (
                     <li key={linkGroup._uid}>
                       {linkGroup.links?.cached_url ? (
@@ -64,7 +64,7 @@ const Footer = ({ blok }) => {
                           </a>
                         </Link>
                       ) : (
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm text-gray-400  hover:text-black">
                           {linkGroup.title || "No Link Available"}
                         </span>
                       )}
