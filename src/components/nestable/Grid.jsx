@@ -1,10 +1,7 @@
 const Grid = ({ blok }) => {
-  console.log(blok);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-8">
       {" "}
-      {/* Added px-6 and py-8 for horizontal and vertical padding */}
       {blok.columns.map((gridItem, index) => {
         return (
           <div
