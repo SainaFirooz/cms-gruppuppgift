@@ -98,13 +98,21 @@ export class StoryblokCMS {
         search_term: searchTerm,
         filter_query: {
           component: {
-            in: "product",
+            in: "product", // Ensure it only fetches products
           },
         },
         version: this.VERSION,
         cv: Date.now(),
       });
-      return data.stories;
+
+      // Filter products where the name matches the search term
+      const filteredResults = data.stories.filter((story) => {
+        const { product_name } = story.content;
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        return product_name.toLowerCase().includes(lowerCaseSearchTerm);
+      });
+
+      return filteredResults;
     } catch (error) {
       console.error("Error searching for products:", error);
       return [];

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { StoryblokCMS } from "@/utils/cms";
+import { StoryblokCMS } from "@/utils/cms"; // Ensure this imports your custom StoryblokCMS class
 
 export default function SearchBar({ search_placeholder = "Search" }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +13,15 @@ export default function SearchBar({ search_placeholder = "Search" }) {
     if (query.length > 2) {
       try {
         const results = await StoryblokCMS.searchProducts(query);
-        setSearchResults(results || []);
+        // Filter strictly by product name or description containing the search query
+        const filteredResults = results.filter((story) => {
+          const { product_name, product_description } = story.content;
+          return (
+            product_name.toLowerCase().includes(query.toLowerCase()) ||
+            product_description.toLowerCase().includes(query.toLowerCase())
+          );
+        });
+        setSearchResults(filteredResults || []);
       } catch (error) {
         console.error("Error fetching search results:", error);
         setSearchResults([]);
