@@ -1,5 +1,3 @@
-This is a boilerplate for WEBB23 CMS Course. Next.js project with Storyblok CMS integration.
-
 ## Gruppuppgift
 
 ## Saina, Miguel och Brian
@@ -20,7 +18,6 @@ bun dev
 
 Second, add token from Storyblok to your env, see env.example for reference:
 Third, start developing your project.
-
 
 ## Deploy on Vercel
 

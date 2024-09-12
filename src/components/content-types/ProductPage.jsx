@@ -77,7 +77,7 @@ const ProductPage = ({ blok }) => {
               Size & Fit Guide
             </a>
             <p className="text-sm text-gray-500">
-              Height of model: 189 cm. / 6' 2" Size 41
+              Height of model: 189 cm. / 6&apos; 2&quot; Size 41
             </p>
           </div>
         </div>

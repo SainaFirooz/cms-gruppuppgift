@@ -3,7 +3,7 @@ export default function NotFound() {
     <div className="min-h-screen flex flex-col items-center justify-center text-center p-8">
       <h1 className="text-4xl font-bold text-gray-800">404</h1>
       <p className="text-lg text-gray-600 mt-4">
-        Oops! The page you are looking for doesn't exist.
+        Oops! The page you are looking for doesn&apos;t exist.
       </p>
 
       {/* Sad Face SVG */}
