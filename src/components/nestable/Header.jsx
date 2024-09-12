@@ -20,7 +20,7 @@ const Header = ({ blok }) => {
 
   const getAbsoluteUrl = (url) => {
     if (url && !url.startsWith("/")) {
-      return `/${url}`; // Ensure URL starts with '/'
+      return `/${url}`;
     }
     return url || "/";
   };
