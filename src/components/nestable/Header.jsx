@@ -36,7 +36,7 @@ const Header = ({ blok }) => {
 
   const renderSecondLevelSubmenu = (submenuItems) => {
     return (
-      <ul className="absolute left-full top-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20">
+      <ul className="absolute left-full top-[-30px] w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20">
         {submenuItems.map((submenuItem) => (
           <li key={submenuItem._uid}>
             <div
@@ -66,14 +66,13 @@ const Header = ({ blok }) => {
             onMouseLeave={() => setHoveredSubMenu(null)}
           >
             <div
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition duration-200 ease-in-out"
-              onClick={() =>
-                handleNavigation(submenuItem.submenu_link?.cached_url)
-              }
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition duration-200 ease-in-out cursor-pointer"
+              onClick={() => {
+                const url = submenuItem.link_url?.cached_url; // Ensure cached_url is used
+                if (url) handleNavigation(url);
+              }}
             >
-              {submenuItem.submenu_name ||
-                submenuItem.link_name ||
-                "Unnamed Submenu Item"}
+              {submenuItem.link_name || "Unnamed Submenu Item"}
             </div>
 
             {Array.isArray(submenuItem.submenu_items) &&
