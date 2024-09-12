@@ -13,10 +13,7 @@ export class StoryblokCMS {
     if (!params) return {};
     const uri = params?.slug?.join("/");
     const storyUrl = "cdn/stories/" + uri;
-    const { data } = await this.sbGet(
-      storyUrl,
-      this.getDefaultSBParams()
-    );
+    const { data } = await this.sbGet(storyUrl, this.getDefaultSBParams());
     return data.story;
   }
 
@@ -80,6 +77,37 @@ export class StoryblokCMS {
       return paths;
     } catch (error) {
       console.log("PATHS ERROR", error);
+    }
+  }
+  static async getProducts() {
+    console.log(this.VERSION);
+    try {
+      const { data } = await this.sbGet("cdn/stories/", {
+        starts_with: "products/",
+        version: this.VERSION,
+      });
+      return data.stories;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return [];
+    }
+  }
+  static async searchProducts(searchTerm) {
+    try {
+      const { data } = await this.sbGet("cdn/stories", {
+        search_term: searchTerm,
+        filter_query: {
+          component: {
+            in: "product",
+          },
+        },
+        version: this.VERSION,
+        cv: Date.now(),
+      });
+      return data.stories;
+    } catch (error) {
+      console.error("Error searching for products:", error);
+      return [];
     }
   }
 }
