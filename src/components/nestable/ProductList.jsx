@@ -12,21 +12,18 @@ const ProductList = ({ blok }) => {
       try {
         // Fetch all products
         const prod = await StoryblokCMS.getProducts();
-        console.log("Fetched products:", prod);
 
         // Get selected product UUIDs from the blok.product field
         const selectedProductUUIDs = blok.product || [];
-        console.log("Selected product UUIDs:", selectedProductUUIDs);
 
         // Filter products by matching UUID
         const filteredProducts = prod.filter(
           (product) =>
-            selectedProductUUIDs.includes(product.uuid) && // Match UUIDs instead of slugs
+            selectedProductUUIDs.includes(product.uuid) &&
             product.content.product_name &&
             product.content.product_price &&
             product.content.product_sizes?.length > 0
         );
-        console.log("Filtered products:", filteredProducts);
 
         setProducts(filteredProducts);
       } catch (e) {

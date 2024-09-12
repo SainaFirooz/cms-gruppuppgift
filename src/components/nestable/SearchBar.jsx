@@ -12,10 +12,7 @@ export default function SearchBar({ search_placeholder = "Search" }) {
   const handleSearch = async (query) => {
     if (query.length > 2) {
       try {
-        console.log("Searching for:", query);
-
         const results = await StoryblokCMS.searchProducts(query);
-        console.log("Storyblok API response:", results);
         setSearchResults(results || []);
       } catch (error) {
         console.error("Error fetching search results:", error);
