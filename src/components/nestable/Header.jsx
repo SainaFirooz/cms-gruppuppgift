@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Import from next/navigation for App Router
+import { useRouter } from "next/navigation";
 import SearchBar from "./SearchBar";
 
 const Header = ({ blok }) => {
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const [hoveredSubMenu, setHoveredSubMenu] = useState(null);
-  const router = useRouter(); // Initialize router
+  const router = useRouter();
 
   const { content } = blok || {};
   const blocks = content?.Blocks || [];
