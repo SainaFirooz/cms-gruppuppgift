@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { StoryblokCMS } from "@/utils/cms"; // Ensure this imports your custom StoryblokCMS class
+import { StoryblokCMS } from "@/utils/cms";
 
 export default function SearchBar({ search_placeholder = "Search" }) {
   const [searchTerm, setSearchTerm] = useState("");
